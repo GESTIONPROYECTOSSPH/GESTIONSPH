@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de accesos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #0f141a;
+    --panel:         #1a2129;
+    --panel-hover:   #202932;
+    --border:        #2a333d;
+    --border-hover:  #4a4038;
+    --text:          #edf0f3;
+    --text-muted:    #8b95a1;
+    --text-faint:    #5b6570;
+    --amber-1:       #ff9d42;
+    --amber-2:       #ffc857;
+    --focus:         #ffc857;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ -webkit-font-smoothing:antialiased; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    padding: clamp(28px, 6vw, 88px) clamp(20px, 6vw, 96px) 60px;
+    background-image:
+      radial-gradient(ellipse 1100px 620px at 10% -18%, rgba(255,157,66,0.22), transparent 62%),
+      radial-gradient(ellipse 800px 560px at 95% -6%, rgba(255,200,87,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 60% 8%, rgba(255,120,60,0.08), transparent 65%);
+    background-repeat:no-repeat;
+  }
+
+  .wrap{ max-width: 1040px; margin: 0 auto; position:relative; z-index:1; }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-bottom: clamp(48px, 8vw, 76px);
+    max-width: 620px;
+  }
+
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .mark{
+    width:40px; height:40px;
+    border-radius:11px;
+    background: linear-gradient(135deg, var(--amber-1), var(--amber-2));
+    box-shadow: 0 8px 24px -8px rgba(255,157,66,0.55);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .mark svg{ width:20px; height:20px; }
+
+  .wordmark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size: clamp(24px, 3.4vw, 30px);
+    letter-spacing: -0.01em;
+    line-height:1;
+    background: linear-gradient(100deg, var(--amber-2) 0%, var(--amber-1) 45%, #ff7a45 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tagline{
+    font-size: 13px;
+    color: var(--text-faint);
+    letter-spacing: 0.01em;
+    margin-top: 2px;
+  }
+
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size: clamp(22px, 3vw, 28px);
+    letter-spacing: -0.01em;
+    line-height:1.15;
+    margin-top: 30px;
+  }
+
+  header p{
+    color: var(--text-muted);
+    font-size: 15.5px;
+    line-height:1.6;
+    max-width: 46ch;
+  }
+
+  /* ---------- Section groups ---------- */
+  section + section{ margin-top: clamp(36px, 5vw, 52px); }
+
+  .group-label{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight:600;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    padding-left: 2px;
+  }
+
+  .grid{
+    display:grid;
+    gap: 12px;
+  }
+  .grid.cols-2{ grid-template-columns: 1fr 1fr; }
+  .grid.cols-1{ grid-template-columns: 1fr; }
+
+  /* ---------- Cards ---------- */
+  a.card{
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 20px 12px 12px;
+    text-decoration:none;
+    color:inherit;
+    min-height: 0;
+    overflow:hidden;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  }
+
+  a.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(135deg, rgba(255,157,66,0.16), rgba(255,120,60,0.05) 45%, transparent 75%);
+    opacity:0;
+    transition: opacity 0.25s ease;
+    pointer-events:none;
+  }
+
+  a.card::after{
+    content:"";
+    position:absolute;
+    left:14px; right:14px; bottom:6px;
+    height:2px;
+    border-radius:2px;
+    background: linear-gradient(90deg, var(--amber-1), var(--amber-2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.28s ease;
+  }
+  a.card:hover::after, a.card:focus-visible::after{ transform: scaleX(1); }
+
+  a.card:hover, a.card:focus-visible{
+    background: var(--panel-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+  a.card:hover::before, a.card:focus-visible::before{ opacity:1; }
+
+  a.card:focus-visible{
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .card-icon{
+    width:30px; height:30px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,200,87,0.35), rgba(255,120,60,0.12) 65%, transparent 80%), #232c35;
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    box-shadow: 0 0 0 4px rgba(255,157,66,0.06);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  a.card:hover .card-icon, a.card:focus-visible .card-icon{
+    border-color: rgba(255,178,80,0.45);
+    box-shadow: 0 0 0 6px rgba(255,157,66,0.12);
+  }
+  .card-icon svg{
+    width:14px; height:14px;
+    stroke: var(--amber-2);
+  }
+
+  .card-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight:500;
+    line-height:1.25;
+  }
+
+  .card-desc{
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height:1.4;
+    margin-top:2px;
+  }
+
+  /* wide tile spans both columns */
+  .span-2{ grid-column: 1 / -1; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    position:relative;
+    margin-top: 72px;
+    padding-top: 22px;
+    color: var(--text-faint);
+    font-size: 13px;
+  }
+  footer::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:1px;
+    background: linear-gradient(90deg, rgba(255,157,66,0.5), rgba(255,200,87,0.15) 40%, transparent 80%);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px){
+    .grid.cols-2{ grid-template-columns: 1fr; }
+    header{ flex-direction:column; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    a.card{ transition:none; }
+    a.card:hover{ transform:none; }
+  }
+
+  /* ---------- Cursor glow trail ---------- */
+  .sparkle{
+    position:fixed;
+    top:0; left:0;
+    width:260px; height:260px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    background: radial-gradient(circle, rgba(255,200,87,0.20) 0%, rgba(255,157,66,0.10) 40%, transparent 72%);
+    filter: blur(22px);
+    mix-blend-mode: screen;
+    transform: translate(-50%, -50%) scale(0.85);
+    opacity: 0.55;
+    animation: sparkle-fade 1.3s ease-out forwards;
+  }
+
+  @keyframes sparkle-fade{
+    to{
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .sparkle{ display:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="brand-row">
+        <div class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0f141a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="wordmark">SOLPHOWER</div>
+          <div class="tagline">Energía para tu vida</div>
+        </div>
+      </div>
+      <div>
+        <h1>Portal de accesos</h1>
+        <p>Entradas directas a las herramientas del equipo — campo, horas extra, soporte, mantenimiento y flota.</p>
+      </div>
+    </header>
+
+    <section>
+      <div class="group-label">Campo</div>
+      <div class="grid cols-1">
+        <a class="card span-2" href="https://script.google.com/macros/s/AKfycbydN_ONnNAagiDRAXM289M6_p-wpDI5_aDhi0-xbn92A5k-uwd__sm5ZuAlHX-1zLtRHQ/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Seguimiento de técnicos</div>
+            <div class="card-desc">Estado y avance de las visitas técnicas en curso.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Horas extra</div>
+      <div class="grid cols-2">
+        <a class="card" href="https://script.google.com/macros/s/AKfycbwDPX1niUeon3AZmRD71F4gv6Ewj7SBKC0UBSblxUHCQOeLaiBrWT9C2GllEyM3W0ok/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 7v5l3.5 2"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Registro</div>
+            <div class="card-desc">Solicita horas extra trabajadas.</div>
+          </div>
+        </a>
+        <a class="card" href="https://script.google.com/macros/s/AKfycby4zpMsGASkY8mie5sv39wu6mNxVAbSDxJ3m4jKtUIifLQfV53cAU7BtXsUTouD8I27xA/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Aprobación</div>
+            <div class="card-desc">Revisa y aprueba solicitudes pendientes.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Soporte técnico</div>
+      <div class="grid cols-2">
+        <a class="card" href="https://script.google.com/macros/s/AKfycbyAzqh2tzUrrMe8F6I0f7DTK3-yhvDd6SpyS3iEOW67kOOkNB8d9QZZc-dBQSp2vE6r/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"></path>
+              <path d="M13 6v12" stroke-dasharray="2 2"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Apertura de tickets</div>
+            <div class="card-desc">Registra una nueva solicitud de soporte.</div>
+          </div>
+        </a>
+        <a class="card" href="https://script.google.com/macros/s/AKfycbwOmHE9aL5r6joZ51ChGiO4DH2DvXvWk447Zzyl-xp1C_OlLB4HLDjtP6Op2gVO85Atww/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="14" rx="2"></rect>
+              <path d="M3 9h18M8 14h4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Dashboard de tickets</div>
+            <div class="card-desc">Panorama general del estado de los tickets.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Mantenimiento solar</div>
+      <div class="grid cols-1">
+        <a class="card span-2" href="https://script.google.com/macros/s/AKfycbw1Fe4d0swPHOubZj7W6YdtHi5jYS-s8Ra0xX2hm1OuDDH-zi5es8Y6MgkDOHLOrh9Y/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Seguimiento de mantenimiento</div>
+            <div class="card-desc">Estado de los mantenimientos preventivos fotovoltaicos.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Transporte</div>
+      <div class="grid cols-2">
+        <a class="card" href="https://script.google.com/macros/s/AKfycby7Nu74jYQ4v-zRXu6e2xH6b68Dc-XYp-PXZBTqQSigIlw-GwrQxOa-AEA4fgaKr9S7/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17V9a1 1 0 0 1 1-1h9v9"></path>
+              <path d="M13 11h4l3 3v3h-2"></path>
+              <circle cx="7" cy="17" r="2"></circle>
+              <circle cx="17" cy="17" r="2"></circle>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Registro</div>
+            <div class="card-desc">Da de alta o actualiza datos de camionetas.</div>
+          </div>
+        </a>
+        <a class="card" href="https://script.google.com/macros/s/AKfycbyqP-xqUPuiGf3YvfVX6fChAdkBaVPRWX35wKrAGWYWsMQ0vJLq9ax6SV7S2ujuJS_Now/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 20l-5-4 5-4M4 16h16"></path>
+              <path d="M15 4l5 4-5 4M20 8H4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Seguimiento</div>
+            <div class="card-desc">Consulta el uso y estado de cada vehículo.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer>Portal interno · actualiza este archivo para agregar o modificar accesos</footer>
+
+  </div>
+
+<script>
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let lastTime = 0;
+    const minGap = 90; // ms entre destellos para un rastro más difuso y espaciado
+
+    function spawnSparkle(x, y){
+      const el = document.createElement('div');
+      el.className = 'sparkle';
+      const size = 200 + Math.random() * 140;
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastTime < minGap) return;
+      lastTime = now;
+      spawnSparkle(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      const now = performance.now();
+      if (now - lastTime < minGap) return;
+      lastTime = now;
+      const t = e.touches[0];
+      if (t) spawnSparkle(t.clientX, t.clientY);
+    }, { passive: true });
+  })();
+</script>
+</body>
+</html>
