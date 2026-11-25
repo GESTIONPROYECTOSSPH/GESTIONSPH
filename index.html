@@ -209,22 +209,6 @@
   /* wide tile spans both columns */
   .span-2{ grid-column: 1 / -1; }
 
-  /* ---------- Footer ---------- */
-  footer{
-    position:relative;
-    margin-top: 72px;
-    padding-top: 22px;
-    color: var(--text-faint);
-    font-size: 13px;
-  }
-  footer::before{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0;
-    height:1px;
-    background: linear-gradient(90deg, rgba(255,157,66,0.5), rgba(255,200,87,0.15) 40%, transparent 80%);
-  }
-
   /* ---------- Responsive ---------- */
   @media (max-width: 640px){
     .grid.cols-2{ grid-template-columns: 1fr; }
@@ -282,7 +266,7 @@
       </div>
       <div>
         <h1>Portal de accesos</h1>
-        <p>Entradas directas a las herramientas del equipo — campo, horas extra, soporte, mantenimiento y flota.</p>
+        <p>Entradas directas a las herramientas del equipo — campo, proyectos, PQR, novedades de personal, horas extra, soporte, mantenimiento y flota.</p>
       </div>
     </header>
 
@@ -298,6 +282,54 @@
           <div>
             <div class="card-title">Seguimiento de técnicos</div>
             <div class="card-desc">Estado y avance de las visitas técnicas en curso.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Gestión</div>
+      <div class="grid cols-2">
+        <a class="card" href="https://script.google.com/macros/s/AKfycbzgo8l47qSE8JvQlG73RbX0GTPDW8YJJQeYj4SS6pZZg0idUu1cFHYaRMD3lpgEH0Uv/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Proyectos</div>
+            <div class="card-desc">Seguimiento y estado de los proyectos.</div>
+          </div>
+        </a>
+        <a class="card" href="https://script.google.com/macros/s/AKfycbwpnxrWW1JfyCWm-K29FXIEX1WjxsgWC9rxH6g1fFE/dev?k=0d4b37af7a7a403cb81a88b9bb76b81462b88e0fcfd2419b8568087cb3dbcb6d" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path>
+              <path d="M9 10h6M9 14h4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">PQR</div>
+            <div class="card-desc">Registro y seguimiento de peticiones, quejas y reclamos.</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="group-label">Novedades de personal</div>
+      <div class="grid cols-1">
+        <a class="card span-2" href="https://script.google.com/macros/s/AKfycbyp2K4J02UwOy1dfyy5uMXCJPIzBtmUoalTfaz9rLDfrJb_Q9E-wvQnmoZ4jgHfSOZe/exec" target="_blank" rel="noopener">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+              <path d="M16 3v4M8 3v4M3 10h18"></path>
+              <path d="M9 15l2 2 4-4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Permisos, vacaciones e incapacidades</div>
+            <div class="card-desc">Permisos, vacaciones, incapacidades y horas extra en un solo lugar.</div>
           </div>
         </a>
       </div>
@@ -411,8 +443,6 @@
         </a>
       </div>
     </section>
-
-    <footer>Portal interno · actualiza este archivo para agregar o modificar accesos</footer>
 
   </div>
 
